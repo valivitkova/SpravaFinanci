@@ -19,7 +19,7 @@ namespace SpravaFinanci
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Transakce formular = new Transakce();
+            FormPridat formular = new FormPridat();
             formular.ShowDialog();
         }
     }
