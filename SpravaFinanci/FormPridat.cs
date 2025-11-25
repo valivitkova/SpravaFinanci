@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SQLite;
 
 namespace SpravaFinanci
 {
     public partial class FormPridat : Form
     {
+        public event Action DataUlozena;
         public FormPridat()
         {
             InitializeComponent();
@@ -20,22 +22,24 @@ namespace SpravaFinanci
         private void FormPridat_Load(object sender, EventArgs e)
         {
             // Přidání položek do ComboBoxu
-            cmbUcel.Items.Add("Jídlo");
-            cmbUcel.Items.Add("Doprava");
-            cmbUcel.Items.Add("Bydlení");
-            cmbUcel.Items.Add("Zábava");
-            cmbUcel.Items.Add("Oblečení");
-            cmbUcel.Items.Add("Vlastní...");
-            cmbUcel.SelectedIndex = 0;
+            cmbKategorie.Items.Add("");
+            cmbKategorie.Items.Add("Jídlo");
+            cmbKategorie.Items.Add("Doprava");
+            cmbKategorie.Items.Add("Bydlení");
+            cmbKategorie.Items.Add("Zábava");
+            cmbKategorie.Items.Add("Oblečení");
+            cmbKategorie.Items.Add("Vlastní...");
+            cmbKategorie.SelectedIndex = 0;
 
             cmbTyp.Items.Add("Vklad");
             cmbTyp.Items.Add("Výběr");
             cmbTyp.SelectedIndex = 0;
+
         }
 
         private void cmbUcel_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbUcel.SelectedItem.ToString() == "Vlastní...")
+            if (cmbKategorie.SelectedItem.ToString() == "Vlastní...")
             {
                 txtVlastniUcel.Visible = true;  //ukáže textové pole
                 txtVlastniUcel.Text = "";
@@ -49,22 +53,37 @@ namespace SpravaFinanci
 
         private void btnPridat_Click(object sender, EventArgs e)
         {
-            string ucel;
-
-            if (cmbUcel.SelectedItem.ToString() == "Vlasní...")
+            //validace castky
+            if (!decimal.TryParse(txtCastka.Text, out decimal castka))
             {
-                ucel = txtVlastniUcel.Text;
+                MessageBox.Show("Zadej platnou částku!");
+                return;
+            }
 
-                if (!string.IsNullOrWhiteSpace(ucel))
+            string kategorie;
+
+            if (cmbKategorie.SelectedItem.ToString() == "Vlasní...")
+            {
+                kategorie = txtVlastniUcel.Text;
+
+                if (!string.IsNullOrWhiteSpace(kategorie))
                 {
                     //přidá vlastní účel do ComboBoxu (Před položku Vlastni...)
-                    cmbUcel.Items.Insert(cmbUcel.Items.Count - 1, ucel);
+                    cmbKategorie.Items.Insert(cmbKategorie.Items.Count - 1, kategorie);
                 }
             }
             else
             {
-                ucel = cmbUcel.SelectedItem.ToString();
+                kategorie = cmbKategorie.SelectedItem.ToString();
             }
+
+            string typ = cmbTyp.SelectedItem.ToString();
+            DateTime datum = dtpDatum.Value;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
