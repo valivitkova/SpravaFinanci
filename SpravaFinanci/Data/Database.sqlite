@@ -1,1 +1,8 @@
-﻿
+﻿CREATE TABLE IF NOT EXISTS Transakce (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Typ TEXT NOT NULL,
+    Castka REAL NOT NULL,
+    Ucel TEXT NOT NULL,
+    Datum TEXT NOT NULL,
+    Poznamka TEXT
+);
