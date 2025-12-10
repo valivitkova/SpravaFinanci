@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -57,15 +58,18 @@ namespace SpravaFinanci
 
             string kategorie;
 
-            if (cmbKategorie.SelectedItem.ToString() == "Vlasní...")
+            if (cmbKategorie.SelectedItem.ToString() == "Vlastní...")
             {
                 kategorie = txtVlastniUcel.Text;
 
-                if (!string.IsNullOrWhiteSpace(kategorie))
+                if (string.IsNullOrWhiteSpace(kategorie))
                 {
-                    //přidá vlastní účel do ComboBoxu (Před položku Vlastni...)
-                    cmbKategorie.Items.Insert(cmbKategorie.Items.Count - 1, kategorie);
+                    MessageBox.Show("Musíš vyplnit vlastní účel!");
+                    txtVlastniUcel.Focus();
+                    return;
                 }
+
+                cmbKategorie.Items.Insert(cmbKategorie.Items.Count - 1, kategorie);
             }
             else
             {
@@ -74,6 +78,46 @@ namespace SpravaFinanci
 
             string typ = cmbTyp.SelectedItem.ToString();
             DateTime datum = dtpDatum.Value;
+
+            bool JePrijem = (typ == "Vklad");
+
+
+            // ***uložení do databáze***
+            try
+            {
+                FinancniZaznam novyZaznam = new FinancniZaznam()
+                {
+                    Datum = datum,
+                    Popis = kategorie, 
+                    Castka = castka,
+                    JePrijem = JePrijem
+                };
+
+                // Otevřeme spojení s databází
+                using (var db = new AppDbKontext())
+                {
+                    // Zkontroluje/vytvoří soubor databáze, pokud neexistuje
+                    db.Database.EnsureCreated();
+
+                    // Přidáme náš balíček do fronty k uložení
+                    db.Zaznamy.Add(novyZaznam);
+
+                    // Fyzicky uložíme do souboru
+                    db.SaveChanges();
+                }
+
+                MessageBox.Show("Úspěšně uloženo!");
+
+                // zavoláme událost pro aktualizaci seznamu
+                DataUlozena?.Invoke();
+
+                this.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Chyba při ukládání do databáze:\n" + ex.Message);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
