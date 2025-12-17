@@ -28,41 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
+            btnPridat = new Button();
+            btnSmazat = new Button();
+            btnZobrazGraf = new Button();
             dgvPrehled = new DataGridView();
             label1 = new Label();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvPrehled).BeginInit();
             SuspendLayout();
             // 
-            // button1
+            // btnPridat
             // 
-            button1.Location = new Point(12, 17);
-            button1.Name = "button1";
-            button1.Size = new Size(203, 86);
-            button1.TabIndex = 0;
-            button1.Text = "Přidat transakci";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btnPridat.Location = new Point(12, 17);
+            btnPridat.Name = "btnPridat";
+            btnPridat.Size = new Size(203, 86);
+            btnPridat.TabIndex = 0;
+            btnPridat.Text = "Přidat transakci";
+            btnPridat.UseVisualStyleBackColor = true;
+            btnPridat.Click += btnPridat_Click;
             // 
-            // button2
+            // btnSmazat
             // 
-            button2.Location = new Point(251, 17);
-            button2.Name = "button2";
-            button2.Size = new Size(206, 86);
-            button2.TabIndex = 1;
-            button2.Text = "Smazat transakci";
-            button2.UseVisualStyleBackColor = true;
+            btnSmazat.Location = new Point(251, 17);
+            btnSmazat.Name = "btnSmazat";
+            btnSmazat.Size = new Size(206, 86);
+            btnSmazat.TabIndex = 1;
+            btnSmazat.Text = "Smazat transakci";
+            btnSmazat.UseVisualStyleBackColor = true;
+            btnSmazat.Click += btnSmazat_Click;
             // 
-            // button3
+            // btnZobrazGraf
             // 
-            button3.Location = new Point(494, 17);
-            button3.Name = "button3";
-            button3.Size = new Size(196, 86);
-            button3.TabIndex = 2;
-            button3.Text = "Zobrazit přehled (grafy)";
-            button3.UseVisualStyleBackColor = true;
+            btnZobrazGraf.Location = new Point(494, 17);
+            btnZobrazGraf.Name = "btnZobrazGraf";
+            btnZobrazGraf.Size = new Size(196, 86);
+            btnZobrazGraf.TabIndex = 2;
+            btnZobrazGraf.Text = "Zobrazit přehled (grafy)";
+            btnZobrazGraf.UseVisualStyleBackColor = true;
             // 
             // dgvPrehled
             // 
@@ -72,8 +74,10 @@
             dgvPrehled.ReadOnly = true;
             dgvPrehled.RowHeadersWidth = 51;
             dgvPrehled.RowTemplate.Height = 24;
+            dgvPrehled.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvPrehled.Size = new Size(678, 255);
             dgvPrehled.TabIndex = 3;
+            dgvPrehled.DataBindingComplete += dgvPrehled_DataBindingComplete;
             // 
             // label1
             // 
@@ -85,16 +89,26 @@
             label1.TabIndex = 4;
             label1.Text = "Zůstatek:";
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(548, 424);
+            label2.Name = "label2";
+            label2.Size = new Size(108, 17);
+            label2.TabIndex = 5;
+            label2.Text = "Častka zůstatku";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(724, 478);
+            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(dgvPrehled);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(btnZobrazGraf);
+            Controls.Add(btnSmazat);
+            Controls.Add(btnPridat);
             Font = new Font("Microsoft Sans Serif", 8.25F);
             Name = "Form1";
             ShowIcon = false;
@@ -106,11 +120,12 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnPridat;
+        private System.Windows.Forms.Button btnSmazat;
+        private System.Windows.Forms.Button btnZobrazGraf;
         private System.Windows.Forms.DataGridView dgvPrehled;
         private System.Windows.Forms.Label label1;
+        private Label label2;
     }
 }
 
