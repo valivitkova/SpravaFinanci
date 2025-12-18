@@ -82,8 +82,33 @@ namespace SpravaFinanci
 
                     var seznamVsechZaznamu = db.Zaznamy.ToList();
 
+                    //Pøijmy, Vydaje a Zustatek v labelech
+                    decimal celkemPrijmy = seznamVsechZaznamu
+                                    .Where(zaznam => zaznam.JePrijem == true)
+                                    .Sum(zaznam => zaznam.Castka);
+
+                    decimal celkemVydaje = seznamVsechZaznamu
+                                    .Where(zaznam => zaznam.JePrijem == false)
+                                    .Sum(zaznam => zaznam.Castka);
+
+                    decimal Zustatek = celkemPrijmy - celkemVydaje;
+
+                    PrijemCislo.Text = "+ " + celkemPrijmy.ToString("C2");
+                    VydajCislo.Text = "- " + celkemVydaje.ToString("C2");
+                    ZustatekCislo.Text = Zustatek.ToString("C2");
+
+                    if (Zustatek >= 0)
+                    {
+                        lblZustatek.ForeColor = Color.Green;
+                    }
+                    else
+                    {
+                        lblZustatek.ForeColor = Color.Red;
+                    }
+
                     dgvPrehled.DataSource = null;
                     dgvPrehled.DataSource = seznamVsechZaznamu;
+
                 }
             }
             catch (Exception ex)
@@ -108,11 +133,11 @@ namespace SpravaFinanci
                         break;
 
                     case "Doprava":
-                        radek.DefaultCellStyle.BackColor = Color.LightBlue;
+                        radek.DefaultCellStyle.BackColor = Color.LightSkyBlue;
                         break;
 
                     case "Bydlení":
-                        radek.DefaultCellStyle.BackColor = Color.Yellow;
+                        radek.DefaultCellStyle.BackColor = Color.LightGray;
                         break;
 
                     case "Zábava":
@@ -120,11 +145,11 @@ namespace SpravaFinanci
                         break;
 
                     case "Obleèení":
-                        radek.DefaultCellStyle.BackColor = Color.Thistle;
+                        radek.DefaultCellStyle.BackColor = Color.LightSteelBlue;
                         break;
 
                     default:
-                        radek.DefaultCellStyle.BackColor = Color.LightGray;
+                        radek.DefaultCellStyle.BackColor = Color.LightYellow;
                         break;
 
                 }

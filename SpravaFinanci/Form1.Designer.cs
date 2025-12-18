@@ -32,8 +32,12 @@
             btnSmazat = new Button();
             btnZobrazGraf = new Button();
             dgvPrehled = new DataGridView();
-            label1 = new Label();
-            label2 = new Label();
+            lblZustatek = new Label();
+            lblPrijmy = new Label();
+            lblVydaje = new Label();
+            PrijemCislo = new Label();
+            VydajCislo = new Label();
+            ZustatekCislo = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvPrehled).BeginInit();
             SuspendLayout();
             // 
@@ -79,32 +83,77 @@
             dgvPrehled.TabIndex = 3;
             dgvPrehled.DataBindingComplete += dgvPrehled_DataBindingComplete;
             // 
-            // label1
+            // lblZustatek
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            label1.Location = new Point(449, 418);
-            label1.Name = "label1";
-            label1.Size = new Size(93, 25);
-            label1.TabIndex = 4;
-            label1.Text = "Zůstatek:";
+            lblZustatek.AutoSize = true;
+            lblZustatek.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            lblZustatek.Location = new Point(388, 422);
+            lblZustatek.Name = "lblZustatek";
+            lblZustatek.Size = new Size(93, 25);
+            lblZustatek.TabIndex = 4;
+            lblZustatek.Text = "Zůstatek:";
             // 
-            // label2
+            // lblPrijmy
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(548, 424);
-            label2.Name = "label2";
-            label2.Size = new Size(108, 17);
-            label2.TabIndex = 5;
-            label2.Text = "Častka zůstatku";
+            lblPrijmy.AutoSize = true;
+            lblPrijmy.Font = new Font("Microsoft Sans Serif", 12F);
+            lblPrijmy.Location = new Point(12, 396);
+            lblPrijmy.Name = "lblPrijmy";
+            lblPrijmy.Size = new Size(76, 25);
+            lblPrijmy.TabIndex = 5;
+            lblPrijmy.Text = "Příjmy: ";
+            // 
+            // lblVydaje
+            // 
+            lblVydaje.AutoSize = true;
+            lblVydaje.Font = new Font("Microsoft Sans Serif", 12F);
+            lblVydaje.Location = new Point(12, 447);
+            lblVydaje.Name = "lblVydaje";
+            lblVydaje.Size = new Size(84, 25);
+            lblVydaje.TabIndex = 6;
+            lblVydaje.Text = "Výdaje: ";
+            // 
+            // PrijemCislo
+            // 
+            PrijemCislo.AutoSize = true;
+            PrijemCislo.Font = new Font("Microsoft Sans Serif", 12F);
+            PrijemCislo.Location = new Point(90, 396);
+            PrijemCislo.Name = "PrijemCislo";
+            PrijemCislo.Size = new Size(64, 25);
+            PrijemCislo.TabIndex = 7;
+            PrijemCislo.Text = "label1";
+            // 
+            // VydajCislo
+            // 
+            VydajCislo.AutoSize = true;
+            VydajCislo.Font = new Font("Microsoft Sans Serif", 12F);
+            VydajCislo.Location = new Point(97, 447);
+            VydajCislo.Name = "VydajCislo";
+            VydajCislo.Size = new Size(64, 25);
+            VydajCislo.TabIndex = 8;
+            VydajCislo.Text = "label2";
+            // 
+            // ZustatekCislo
+            // 
+            ZustatekCislo.AutoSize = true;
+            ZustatekCislo.Font = new Font("Microsoft Sans Serif", 12F);
+            ZustatekCislo.Location = new Point(483, 422);
+            ZustatekCislo.Name = "ZustatekCislo";
+            ZustatekCislo.Size = new Size(64, 25);
+            ZustatekCislo.TabIndex = 9;
+            ZustatekCislo.Text = "label3";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(724, 478);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            ClientSize = new Size(724, 492);
+            Controls.Add(ZustatekCislo);
+            Controls.Add(VydajCislo);
+            Controls.Add(PrijemCislo);
+            Controls.Add(lblVydaje);
+            Controls.Add(lblPrijmy);
+            Controls.Add(lblZustatek);
             Controls.Add(dgvPrehled);
             Controls.Add(btnZobrazGraf);
             Controls.Add(btnSmazat);
@@ -124,8 +173,12 @@
         private System.Windows.Forms.Button btnSmazat;
         private System.Windows.Forms.Button btnZobrazGraf;
         private System.Windows.Forms.DataGridView dgvPrehled;
-        private System.Windows.Forms.Label label1;
-        private Label label2;
+        private System.Windows.Forms.Label lblZustatek;
+        private Label lblPrijmy;
+        private Label lblVydaje;
+        private Label PrijemCislo;
+        private Label VydajCislo;
+        private Label ZustatekCislo;
     }
 }
 
