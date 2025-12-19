@@ -9,6 +9,11 @@ namespace SpravaFinanci
 {
     public partial class FormPridat : Form
     {
+        // Proměnná, která si pamatuje ID záznamu, pokud ho upravujeme
+        private int? idUpravovanehoZaznamu = null;
+
+        private FinancniZaznam docasnyZaznamProEditaci = null;
+
         public event Action DataUlozena;
         public FormPridat()
         {
@@ -27,10 +32,43 @@ namespace SpravaFinanci
             cmbKategorie.Items.Add("Vlastní...");
             cmbKategorie.SelectedIndex = 0;
 
-            cmbTyp.Items.Add("Vklad");
-            cmbTyp.Items.Add("Výběr");
+            cmbTyp.Items.Add("Příjem");
+            cmbTyp.Items.Add("Výdaj");
             cmbTyp.SelectedIndex = 0;
 
+            if (docasnyZaznamProEditaci != null)
+            {
+                idUpravovanehoZaznamu = docasnyZaznamProEditaci.Id;
+
+                //Změna textu na tlačítku a v záhlaví
+                btnPridat.Text = "Upravit záznam";
+                this.Text = "Úprava transakce";
+
+                dtpDatum.Value = docasnyZaznamProEditaci.Datum;
+                txtCastka.Text = docasnyZaznamProEditaci.Castka.ToString();
+
+                txtPoznamka.Text = docasnyZaznamProEditaci.Poznamka;
+
+                if (docasnyZaznamProEditaci.JePrijem == true)
+                {
+                    cmbTyp.SelectedItem = "Příjem";
+                }
+                else
+                {
+                    cmbTyp.SelectedItem = "Výdaj";
+                }
+
+                if(cmbKategorie.Items.Contains(docasnyZaznamProEditaci.Popis))
+                {
+                    cmbKategorie.SelectedItem = docasnyZaznamProEditaci.Popis;
+                }
+                else
+                {
+                    cmbKategorie.SelectedItem = "Vlastní...";
+                    txtVlastniUcel.Text = docasnyZaznamProEditaci.Popis;
+                    txtVlastniUcel.Visible = true;
+                }
+            }
         }
 
         private void cmbUcel_SelectedIndexChanged(object sender, EventArgs e)
@@ -47,7 +85,7 @@ namespace SpravaFinanci
             }
         }
 
-        private void btnPridat_Click(object sender, EventArgs e)
+        private void btnUlozit_Click(object sender, EventArgs e)
         {
             //validace castky
             if (!decimal.TryParse(txtCastka.Text, out decimal castka))
@@ -77,38 +115,61 @@ namespace SpravaFinanci
             }
 
             string typ = cmbTyp.SelectedItem.ToString();
-            DateTime datum = dtpDatum.Value;
+            DateTime datum = dtpDatum.Value.Date;
 
-            bool JePrijem = (typ == "Vklad");
+            bool JePrijem = (typ == "Příjem");
+
+            string poznamka = txtPoznamka.Text;
 
 
             // ***uložení do databáze***
             try
             {
-                FinancniZaznam novyZaznam = new FinancniZaznam()
-                {
-                    Datum = datum,
-                    Popis = kategorie, 
-                    Castka = castka,
-                    JePrijem = JePrijem
-                };
-
-                // Otevřeme spojení s databází
                 using (var db = new AppDbKontext())
                 {
-                    // Zkontroluje/vytvoří soubor databáze, pokud neexistuje
                     db.Database.EnsureCreated();
 
-                    // Přidáme náš balíček do fronty k uložení
-                    db.Zaznamy.Add(novyZaznam);
+                    //Upravuje se nebo se přidává?
+                    if (idUpravovanehoZaznamu != null)
+                    {
+                        // Najdeme záznam díky ID 
+                        var existujiciZaznam = db.Zaznamy.Find(idUpravovanehoZaznamu);
 
-                    // Fyzicky uložíme do souboru
+                        if (existujiciZaznam != null)
+                        {                           
+                            existujiciZaznam.Datum = datum;
+                            existujiciZaznam.Popis = kategorie;
+                            existujiciZaznam.Castka = castka;
+                            existujiciZaznam.JePrijem = JePrijem;
+                            existujiciZaznam.Poznamka = txtPoznamka.Text;
+
+                            MessageBox.Show("Záznam byl úspěšně upraven.");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Chyba: Záznam k úpravě nebyl nalezen.");
+                        }
+                    }
+                    else
+                    {
+                        FinancniZaznam novyZaznam = new FinancniZaznam()
+                        {
+                            Datum = datum,
+                            Popis = kategorie,
+                            Castka = castka,
+                            JePrijem = JePrijem,
+                            Poznamka = poznamka
+
+                        };
+
+                        db.Zaznamy.Add(novyZaznam);
+                        MessageBox.Show("Nový záznam byl úspěšně uložen.");
+                    }
+
                     db.SaveChanges();
                 }
 
-                MessageBox.Show("Úspěšně uloženo!");
-
-                // zavoláme událost pro aktualizaci seznamu
+                // Zavoláme událost pro aktualizaci seznamu na hlavním okně
                 DataUlozena?.Invoke();
 
                 this.Close();
@@ -120,9 +181,17 @@ namespace SpravaFinanci
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void PripravitProEditaci(FinancniZaznam zaznamKEditaci)
+        {
+            docasnyZaznamProEditaci = zaznamKEditaci;
+
+            
+        }
+
+        private void btnZrusit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
     }
 }

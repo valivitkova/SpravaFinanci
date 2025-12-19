@@ -109,6 +109,31 @@ namespace SpravaFinanci
                     dgvPrehled.DataSource = null;
                     dgvPrehled.DataSource = seznamVsechZaznamu;
 
+                    if (dgvPrehled.Columns["Id"] != null)
+                        dgvPrehled.Columns["Id"].Visible = false;
+
+                    if (dgvPrehled.Columns["JePrijem"] != null)
+                        dgvPrehled.Columns["JePrijem"].Visible = false;
+
+                    if (dgvPrehled.Columns["TypTextem"] != null)
+                    {
+                        dgvPrehled.Columns["TypTextem"].HeaderText = "Typ";
+                        dgvPrehled.Columns["TypTextem"].DisplayIndex = 2;
+                    }
+
+                    if (dgvPrehled.Columns["Datum"] != null)
+                    {
+                        dgvPrehled.Columns["Datum"].DefaultCellStyle.Format = "d";
+                    }
+
+                    if (dgvPrehled.Columns["Popis"] != null)
+                        dgvPrehled.Columns["Popis"].HeaderText = "Kategorie";
+
+                    if (dgvPrehled.Columns["Castka"] != null)
+                        dgvPrehled.Columns["Castka"].HeaderText = "»·stka";
+
+                    if (dgvPrehled.Columns["Poznamka"] != null)
+                        dgvPrehled.Columns["Poznamka"].HeaderText = "Pozn·mka";
                 }
             }
             catch (Exception ex)
@@ -156,5 +181,28 @@ namespace SpravaFinanci
             }
         }
 
+        private void dgvPrehled_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            try
+            {
+                DataGridViewRow vybranyRadek = dgvPrehled.Rows[e.RowIndex];
+                FinancniZaznam zaznamKUprave = (FinancniZaznam)vybranyRadek.DataBoundItem;
+
+                FormPridat formularEditace = new FormPridat();
+
+                formularEditace.PripravitProEditaci(zaznamKUprave);
+
+                formularEditace.ShowDialog();
+
+                NacistAObnovitData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Chyba p¯i otevÌr·nÌ editace: " + ex.Message);
+            }
+        }
     }
 }
