@@ -43,7 +43,8 @@
             label1 = new Label();
             panel2 = new Panel();
             panel3 = new Panel();
-            button1 = new Button();
+            txtHledat = new TextBox();
+            btnFiltrovat = new Button();
             panel4 = new Panel();
             ((System.ComponentModel.ISupportInitialize)dgvPrehled).BeginInit();
             panel1.SuspendLayout();
@@ -54,7 +55,7 @@
             // 
             // btnPridat
             // 
-            btnPridat.BackColor = Color.DodgerBlue;
+            btnPridat.BackColor = Color.Silver;
             btnPridat.FlatStyle = FlatStyle.Flat;
             btnPridat.Location = new Point(14, 11);
             btnPridat.Margin = new Padding(4);
@@ -67,7 +68,7 @@
             // 
             // btnSmazat
             // 
-            btnSmazat.BackColor = Color.LightCoral;
+            btnSmazat.BackColor = Color.Silver;
             btnSmazat.FlatStyle = FlatStyle.Flat;
             btnSmazat.Location = new Point(183, 11);
             btnSmazat.Margin = new Padding(4);
@@ -80,7 +81,7 @@
             // 
             // btnZobrazGraf
             // 
-            btnZobrazGraf.BackColor = Color.FromArgb(242, 231, 6);
+            btnZobrazGraf.BackColor = Color.Silver;
             btnZobrazGraf.FlatStyle = FlatStyle.Flat;
             btnZobrazGraf.Location = new Point(360, 11);
             btnZobrazGraf.Margin = new Padding(4);
@@ -92,7 +93,7 @@
             // 
             // dgvPrehled
             // 
-            dgvPrehled.BackgroundColor = Color.LightGray;
+            dgvPrehled.BackgroundColor = Color.White;
             dgvPrehled.BorderStyle = BorderStyle.None;
             dgvPrehled.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -106,6 +107,7 @@
             dgvPrehled.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvPrehled.Dock = DockStyle.Fill;
             dgvPrehled.EnableHeadersVisualStyles = false;
+            dgvPrehled.GridColor = SystemColors.ButtonShadow;
             dgvPrehled.Location = new Point(0, 0);
             dgvPrehled.Margin = new Padding(4);
             dgvPrehled.Name = "dgvPrehled";
@@ -113,7 +115,7 @@
             dgvPrehled.RowHeadersWidth = 51;
             dgvPrehled.RowTemplate.Height = 24;
             dgvPrehled.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPrehled.Size = new Size(700, 378);
+            dgvPrehled.Size = new Size(700, 368);
             dgvPrehled.TabIndex = 3;
             dgvPrehled.CellDoubleClick += dgvPrehled_CellDoubleClick;
             dgvPrehled.DataBindingComplete += dgvPrehled_DataBindingComplete;
@@ -212,6 +214,7 @@
             // 
             // panel2
             // 
+            panel2.BackColor = Color.White;
             panel2.Controls.Add(lblPrijmy);
             panel2.Controls.Add(PrijemCislo);
             panel2.Controls.Add(ZustatekCislo);
@@ -227,7 +230,9 @@
             // 
             // panel3
             // 
-            panel3.Controls.Add(button1);
+            panel3.BackColor = Color.White;
+            panel3.Controls.Add(txtHledat);
+            panel3.Controls.Add(btnFiltrovat);
             panel3.Controls.Add(btnPridat);
             panel3.Controls.Add(btnSmazat);
             panel3.Controls.Add(btnZobrazGraf);
@@ -235,27 +240,42 @@
             panel3.Location = new Point(0, 150);
             panel3.Name = "panel3";
             panel3.Padding = new Padding(5);
-            panel3.Size = new Size(700, 90);
+            panel3.Size = new Size(700, 100);
             panel3.TabIndex = 12;
             // 
-            // button1
+            // txtHledat
             // 
-            button1.BackColor = Color.FromArgb(10, 184, 57);
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Location = new Point(533, 11);
-            button1.Name = "button1";
-            button1.Size = new Size(159, 50);
-            button1.TabIndex = 3;
-            button1.Text = "Filtrovat";
-            button1.UseVisualStyleBackColor = false;
+            txtHledat.BackColor = Color.White;
+            txtHledat.ForeColor = SystemColors.GrayText;
+            txtHledat.Location = new Point(14, 66);
+            txtHledat.Name = "txtHledat";
+            txtHledat.RightToLeft = RightToLeft.No;
+            txtHledat.Size = new Size(325, 27);
+            txtHledat.TabIndex = 4;
+            txtHledat.Text = "Hledat...";
+            txtHledat.TextChanged += txtHledat_TextChanged;
+            txtHledat.Enter += txtHledat_Enter;
+            txtHledat.Leave += txtHledat_Leave;
+            // 
+            // btnFiltrovat
+            // 
+            btnFiltrovat.BackColor = Color.Silver;
+            btnFiltrovat.FlatStyle = FlatStyle.Flat;
+            btnFiltrovat.Location = new Point(533, 11);
+            btnFiltrovat.Name = "btnFiltrovat";
+            btnFiltrovat.Size = new Size(159, 50);
+            btnFiltrovat.TabIndex = 3;
+            btnFiltrovat.Text = "Filtrovat";
+            btnFiltrovat.UseVisualStyleBackColor = false;
+            btnFiltrovat.Click += btnFiltrovat_Click;
             // 
             // panel4
             // 
             panel4.Controls.Add(dgvPrehled);
             panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(0, 240);
+            panel4.Location = new Point(0, 250);
             panel4.Name = "panel4";
-            panel4.Size = new Size(700, 378);
+            panel4.Size = new Size(700, 368);
             panel4.TabIndex = 13;
             // 
             // Form1
@@ -279,6 +299,7 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             panel4.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -300,7 +321,8 @@
         private Panel panel2;
         private Panel panel3;
         private Panel panel4;
-        private Button button1;
+        private Button btnFiltrovat;
+        private TextBox txtHledat;
     }
 }
 

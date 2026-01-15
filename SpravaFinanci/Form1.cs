@@ -5,6 +5,8 @@ namespace SpravaFinanci
 {
     public partial class Form1 : Form
     {
+
+        private List<FinancniZaznam> hlavniSeznamDat = new List<FinancniZaznam>();
         public Form1()
         {
             InitializeComponent();
@@ -80,14 +82,14 @@ namespace SpravaFinanci
                     // kdyby to byl prvnÌ start aplikace
                     db.Database.EnsureCreated();
 
-                    var seznamVsechZaznamu = db.Zaznamy.ToList();
+                    hlavniSeznamDat = db.Zaznamy.OrderByDescending(FinancniZaznam => FinancniZaznam.Datum).ToList();
 
                     //P¯ijmy, Vydaje a Zustatek v labelech
-                    decimal celkemPrijmy = seznamVsechZaznamu
+                    decimal celkemPrijmy = hlavniSeznamDat
                                     .Where(zaznam => zaznam.JePrijem == true)
                                     .Sum(zaznam => zaznam.Castka);
 
-                    decimal celkemVydaje = seznamVsechZaznamu
+                    decimal celkemVydaje = hlavniSeznamDat
                                     .Where(zaznam => zaznam.JePrijem == false)
                                     .Sum(zaznam => zaznam.Castka);
 
@@ -107,7 +109,7 @@ namespace SpravaFinanci
                     }
 
                     dgvPrehled.DataSource = null;
-                    dgvPrehled.DataSource = seznamVsechZaznamu;
+                    dgvPrehled.DataSource = hlavniSeznamDat;
 
                     if (dgvPrehled.Columns["Id"] != null)
                         dgvPrehled.Columns["Id"].Visible = false;
@@ -203,6 +205,80 @@ namespace SpravaFinanci
             {
                 MessageBox.Show("Chyba p¯i otevÌr·nÌ editace: " + ex.Message);
             }
+        }
+
+        private void btnFiltrovat_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtHledat_TextChanged(object sender, EventArgs e)
+        {
+            if (txtHledat.Text == "Hledat...")
+            {
+                return;
+            }
+
+            string hledanyText = txtHledat.Text.ToLower();
+
+            var filtrovanySeznam = hlavniSeznamDat
+                .Where(zaznam =>
+                    (zaznam.Popis != null && zaznam.Popis.ToLower().Contains(hledanyText)) ||
+                    (zaznam.Poznamka != null && zaznam.Poznamka.ToLower().Contains(hledanyText))
+                )
+                .OrderByDescending(FinancniZaznam => FinancniZaznam.Datum)
+                .ToList();
+
+            dgvPrehled.DataSource = null;
+            dgvPrehled.DataSource = filtrovanySeznam;
+
+            NastavitSloupceTabulky();
+        }
+        private void txtHledat_Enter(object sender, EventArgs e)
+        {
+            if (txtHledat.Text == "Hledat...")
+            {
+                txtHledat.Text = "";
+                txtHledat.ForeColor = Color.Black;
+            }
+        }
+
+        private void txtHledat_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtHledat.Text))
+            {
+                txtHledat.Text = "Hledat...";
+                txtHledat.ForeColor = SystemColors.GrayText;
+            }
+        }
+
+        private void NastavitSloupceTabulky()
+        {
+            if (dgvPrehled.Columns["Id"] != null)
+                dgvPrehled.Columns["Id"].Visible = false;
+
+            if (dgvPrehled.Columns["JePrijem"] != null)
+                dgvPrehled.Columns["JePrijem"].Visible = false;
+
+            if (dgvPrehled.Columns["TypTextem"] != null)
+            {
+                dgvPrehled.Columns["TypTextem"].HeaderText = "Typ";
+                dgvPrehled.Columns["TypTextem"].DisplayIndex = 2;
+            }
+
+            if (dgvPrehled.Columns["Datum"] != null)
+            {
+                dgvPrehled.Columns["Datum"].DefaultCellStyle.Format = "d";
+            }
+
+            if (dgvPrehled.Columns["Popis"] != null)
+                dgvPrehled.Columns["Popis"].HeaderText = "Kategorie";
+
+            if (dgvPrehled.Columns["Castka"] != null)
+                dgvPrehled.Columns["Castka"].HeaderText = "»·stka";
+
+            if (dgvPrehled.Columns["Poznamka"] != null)
+                dgvPrehled.Columns["Poznamka"].HeaderText = "Pozn·mka";
         }
     }
 }
