@@ -108,7 +108,7 @@
             dgvPrehled.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvPrehled.Dock = DockStyle.Fill;
             dgvPrehled.EnableHeadersVisualStyles = false;
-            dgvPrehled.GridColor = SystemColors.ButtonShadow;
+            dgvPrehled.GridColor = Color.BurlyWood;
             dgvPrehled.Location = new Point(0, 0);
             dgvPrehled.Margin = new Padding(4);
             dgvPrehled.Name = "dgvPrehled";

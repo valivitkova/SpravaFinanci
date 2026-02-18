@@ -82,7 +82,10 @@ namespace SpravaFinanci
                     // kdyby to byl první start aplikace
                     db.Database.EnsureCreated();
 
-                    hlavniSeznamDat = db.Zaznamy.OrderByDescending(FinancniZaznam => FinancniZaznam.Datum).ToList();
+                    hlavniSeznamDat = db.Zaznamy
+                                        .OrderByDescending(x => x.Datum)
+                                        .ThenByDescending(x => x.Id)
+                                        .ToList();
 
                     //Pøijmy, Vydaje a Zustatek v labelech
                     decimal celkemPrijmy = hlavniSeznamDat
@@ -160,11 +163,11 @@ namespace SpravaFinanci
                         break;
 
                     case "Doprava":
-                        radek.DefaultCellStyle.BackColor = Color.LightSkyBlue;
+                        radek.DefaultCellStyle.BackColor = Color.Violet;
                         break;
 
                     case "Bydlení":
-                        radek.DefaultCellStyle.BackColor = Color.LightGray;
+                        radek.DefaultCellStyle.BackColor = Color.LightSalmon;
                         break;
 
                     case "Zábava":
@@ -176,7 +179,7 @@ namespace SpravaFinanci
                         break;
 
                     default:
-                        radek.DefaultCellStyle.BackColor = Color.LightYellow;
+                        radek.DefaultCellStyle.BackColor = Color.Khaki;
                         break;
 
                 }
@@ -268,7 +271,9 @@ namespace SpravaFinanci
                 }
 
                 //5. výsledek pøevedeme na seznam, seøadíme a pošleme do tabulky
-                var financniSeznam = filtrovanySeznamQuery.OrderBy(x => x.Datum).ToList();
+                var financniSeznam = filtrovanySeznamQuery.OrderByDescending(x => x.Datum)
+                                                          .ThenByDescending(x => x.Id)
+                                                          .ToList();
 
                 dgvPrehled.DataSource = null;
                 dgvPrehled.DataSource = financniSeznam;
@@ -292,7 +297,8 @@ namespace SpravaFinanci
                     (zaznam.Popis != null && zaznam.Popis.ToLower().Contains(hledanyText)) ||
                     (zaznam.Poznamka != null && zaznam.Poznamka.ToLower().Contains(hledanyText))
                 )
-                .OrderByDescending(FinancniZaznam => FinancniZaznam.Datum)
+                .OrderByDescending(x => x.Datum)
+                .ThenByDescending (x => x.Id)
                 .ToList();
 
             dgvPrehled.DataSource = null;
@@ -349,7 +355,15 @@ namespace SpravaFinanci
 
         private void btnZobrazGraf_Click(object sender, EventArgs e)
         {
-            FormGrafy formGrafy = new FormGrafy(hlavniSeznamDat);
+            List<FinancniZaznam> aktualniData = (List<FinancniZaznam>)dgvPrehled.DataSource;
+
+            if(aktualniData == null || aktualniData.Count == 0 )
+            {
+                MessageBox.Show("V tabulce nejsou žádná data k zobrazení.");
+                return;
+            }
+
+            FormGrafy formGrafy = new FormGrafy(aktualniData);
             formGrafy.ShowDialog();
         }
     }
