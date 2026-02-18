@@ -209,12 +209,78 @@ namespace SpravaFinanci
 
         private void btnFiltrovat_Click(object sender, EventArgs e)
         {
+            // 1. Získáme seznam všech použitých kategorií pro naplnìní ComboBoxu
+            List<string> seznamKategorii = hlavniSeznamDat
+                                            .Select(FinancniZaznam => FinancniZaznam.Popis)
+                                            .Distinct()
+                                            .ToList();
+            // 2. Vytvoøíme a otevøeme filtrovací okno
+            FormFiltr filtrForm = new FormFiltr(seznamKategorii);
+
+            // ShowDialog zobrazí okno a èeká, dokud ho uživatel nezavøe
+            //Pokud ho zavøel tlaèítkem "POUŽÍT", jdeme filtrovat
+            if (filtrForm.ShowDialog() == DialogResult.OK)
+            {
+                //3. nastavení filtru
+                FiltrData filtr = filtrForm.VysledekFiltru;
+
+                //4. aplikace filtru
+                //zaène se s kompletním seznamem a postupnì se bude oøezávat
+                //AsQueryable - mužeme øetìzit podmínky 'Where'
+                var filtrovanySeznamQuery = hlavniSeznamDat.AsQueryable();
+
+                //pokud je zadán datum od, filtrujeme 
+                if (filtr.DatumOd.HasValue)
+                {
+                    //filtr podle datumu (Od - Do)
+                    filtrovanySeznamQuery = filtrovanySeznamQuery.Where(x => x.Datum >= filtr.DatumOd);
+                }
+
+                //pokud je zadán datum do, filtrujeme
+                if (filtr.DatumDo.HasValue)
+                {
+                    // pøidáme jeden den, abychom zahrnuli i celý koncový den
+                    filtrovanySeznamQuery = filtrovanySeznamQuery.Where(x => x.Datum < filtr.DatumDo.Value.AddDays(1));
+                }
+
+                //pokud je zadána minimální èástka, filtrujeme
+                if (filtr.CastkaOd.HasValue)
+                {
+                    filtrovanySeznamQuery = filtrovanySeznamQuery.Where(x => x.Castka >= filtr.CastkaOd.Value);
+                }
+
+                //pokud je zadána maximální èástka, filtrujeme
+                if (filtr.CastkaDo.HasValue)
+                {
+                    filtrovanySeznamQuery = filtrovanySeznamQuery.Where(x => x.Castka <= filtr.CastkaDo.Value);
+                }
+
+                //pokud je vybrána konkrétní kategorie (není null), filtrujeme
+                if (filtr.Kategorie != null)
+                {
+                    filtrovanySeznamQuery = filtrovanySeznamQuery.Where(x => x.Popis == filtr.Kategorie);
+                }
+
+                //pokud je vybrán typ (true/false), filtrujeme. 
+                if (filtr.JePrijem.HasValue)
+                {
+                    filtrovanySeznamQuery = filtrovanySeznamQuery.Where(x => x.JePrijem == filtr.JePrijem.Value);
+                }
+
+                //5. výsledek pøevedeme na seznam, seøadíme a pošleme do tabulky
+                var financniSeznam = filtrovanySeznamQuery.OrderBy(x => x.Datum).ToList();
+
+                dgvPrehled.DataSource = null;
+                dgvPrehled.DataSource = financniSeznam;
+
+                NastavitSloupceTabulky();
+            }
 
         }
 
         private void txtHledat_TextChanged(object sender, EventArgs e)
         {
-            if (txtHledat.Text == "Hledat...")
+            if (txtHledat.Text == "Hledat podle kategorií...")
             {
                 return;
             }
@@ -236,7 +302,7 @@ namespace SpravaFinanci
         }
         private void txtHledat_Enter(object sender, EventArgs e)
         {
-            if (txtHledat.Text == "Hledat...")
+            if (txtHledat.Text == "Hledat podle kategorií...")
             {
                 txtHledat.Text = "";
                 txtHledat.ForeColor = Color.Black;
@@ -247,7 +313,7 @@ namespace SpravaFinanci
         {
             if (string.IsNullOrEmpty(txtHledat.Text))
             {
-                txtHledat.Text = "Hledat...";
+                txtHledat.Text = "Hledat podle kategorií...";
                 txtHledat.ForeColor = SystemColors.GrayText;
             }
         }
@@ -279,6 +345,12 @@ namespace SpravaFinanci
 
             if (dgvPrehled.Columns["Poznamka"] != null)
                 dgvPrehled.Columns["Poznamka"].HeaderText = "Poznámka";
+        }
+
+        private void btnZobrazGraf_Click(object sender, EventArgs e)
+        {
+            FormGrafy formGrafy = new FormGrafy(hlavniSeznamDat);
+            formGrafy.ShowDialog();
         }
     }
 }

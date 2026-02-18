@@ -90,6 +90,7 @@
             btnZobrazGraf.TabIndex = 2;
             btnZobrazGraf.Text = "Zobrazit přehled (grafy)";
             btnZobrazGraf.UseVisualStyleBackColor = false;
+            btnZobrazGraf.Click += btnZobrazGraf_Click;
             // 
             // dgvPrehled
             // 
@@ -252,7 +253,7 @@
             txtHledat.RightToLeft = RightToLeft.No;
             txtHledat.Size = new Size(325, 27);
             txtHledat.TabIndex = 4;
-            txtHledat.Text = "Hledat...";
+            txtHledat.Text = "Hledat podle kategorií...";
             txtHledat.TextChanged += txtHledat_TextChanged;
             txtHledat.Enter += txtHledat_Enter;
             txtHledat.Leave += txtHledat_Leave;
