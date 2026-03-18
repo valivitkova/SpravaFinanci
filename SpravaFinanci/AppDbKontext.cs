@@ -13,6 +13,8 @@ namespace SpravaFinanci
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // Zde nastavujeme, jaký databázový stroj se má použít a kde databáze leží
+            // "Data Source=mojeFinance.db" je tzv. connection string (připojovací řetězec)
             optionsBuilder.UseSqlite("Data Source=mojeFinance.db");
         }
     }

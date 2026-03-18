@@ -201,6 +201,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(700, 50);
             panel1.TabIndex = 10;
+            panel1.Click += panel1_Click;
             // 
             // label1
             // 
@@ -228,6 +229,7 @@
             panel2.Padding = new Padding(10);
             panel2.Size = new Size(700, 100);
             panel2.TabIndex = 11;
+            panel2.Click += panel2_Click;
             // 
             // panel3
             // 
@@ -243,6 +245,7 @@
             panel3.Padding = new Padding(5);
             panel3.Size = new Size(700, 100);
             panel3.TabIndex = 12;
+            panel3.Click += panel3_Click;
             // 
             // txtHledat
             // 

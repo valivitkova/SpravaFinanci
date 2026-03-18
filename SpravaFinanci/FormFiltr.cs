@@ -46,7 +46,7 @@ namespace SpravaFinanci
                 DateTime d1 = dtpOd.Value.Date;
                 DateTime d2 = dtpDo.Value.Date;
 
-                // POJISTKA: Pokud je "Od" větší než "Do", prohodíme je
+                //pokud je "Od" větší než "Do", prohodíme je
                 if (d1 > d2)
                 {
                     DateTime pom = d1;

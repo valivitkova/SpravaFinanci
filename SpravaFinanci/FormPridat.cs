@@ -14,6 +14,7 @@ namespace SpravaFinanci
 
         private FinancniZaznam docasnyZaznamProEditaci = null;
 
+        //Událost, která se vyvolá po úspěšném uložení dat
         public event Action DataUlozena;
         public FormPridat()
         {
@@ -36,17 +37,18 @@ namespace SpravaFinanci
             cmbTyp.Items.Add("Výdaj");
             cmbTyp.SelectedIndex = 0;
 
+            //pokud je formulář otevřen pro úpravu
             if (docasnyZaznamProEditaci != null)
             {
                 idUpravovanehoZaznamu = docasnyZaznamProEditaci.Id;
 
                 //Změna textu na tlačítku a v záhlaví
-                btnPridat.Text = "Upravit záznam";
+                btnPridat.Text = "Upravit";
                 this.Text = "Úprava transakce";
 
+                //předvyplníme formulář hodnotami z databáze 
                 dtpDatum.Value = docasnyZaznamProEditaci.Datum;
                 txtCastka.Text = docasnyZaznamProEditaci.Castka.ToString();
-
                 txtPoznamka.Text = docasnyZaznamProEditaci.Poznamka;
 
                 if (docasnyZaznamProEditaci.JePrijem == true)
@@ -58,12 +60,14 @@ namespace SpravaFinanci
                     cmbTyp.SelectedItem = "Výdaj";
                 }
 
+                //pokud záznam existuje v seznamu
                 if(cmbKategorie.Items.Contains(docasnyZaznamProEditaci.Popis))
                 {
                     cmbKategorie.SelectedItem = docasnyZaznamProEditaci.Popis;
                 }
                 else
                 {
+                    //vlastní kategorie
                     cmbKategorie.SelectedItem = "Vlastní...";
                     txtVlastniUcel.Text = docasnyZaznamProEditaci.Popis;
                     txtVlastniUcel.Visible = true;
@@ -100,6 +104,7 @@ namespace SpravaFinanci
             {
                 kategorie = txtVlastniUcel.Text;
 
+                //kontrola, zda je text vyplněn
                 if (string.IsNullOrWhiteSpace(kategorie))
                 {
                     MessageBox.Show("Musíš vyplnit vlastní účel!");
@@ -107,6 +112,7 @@ namespace SpravaFinanci
                     return;
                 }
 
+                //přidání nové kategorie do ComboBoxu
                 cmbKategorie.Items.Insert(cmbKategorie.Items.Count - 1, kategorie);
             }
             else
@@ -117,6 +123,7 @@ namespace SpravaFinanci
             string typ = cmbTyp.SelectedItem.ToString();
             DateTime datum = dtpDatum.Value.Date;
 
+            //true pokud je příjem
             bool JePrijem = (typ == "Příjem");
 
             string poznamka = txtPoznamka.Text;

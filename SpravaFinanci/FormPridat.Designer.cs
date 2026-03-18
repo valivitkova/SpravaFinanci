@@ -54,7 +54,7 @@
             // txtCastka
             // 
             txtCastka.Font = new Font("Microsoft Sans Serif", 16F);
-            txtCastka.Location = new Point(131, 139);
+            txtCastka.Location = new Point(107, 106);
             txtCastka.Margin = new Padding(3, 4, 3, 4);
             txtCastka.Name = "txtCastka";
             txtCastka.Size = new Size(248, 38);
@@ -63,9 +63,10 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(35, 144);
+            label1.Font = new Font("Segoe UI", 9F);
+            label1.Location = new Point(15, 111);
             label1.Name = "label1";
-            label1.Size = new Size(71, 20);
+            label1.Size = new Size(59, 20);
             label1.TabIndex = 1;
             label1.Text = "Částka: ";
             label1.TextAlign = ContentAlignment.MiddleLeft;
@@ -73,9 +74,10 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(34, 200);
+            label2.Font = new Font("Segoe UI", 9F);
+            label2.Location = new Point(14, 162);
             label2.Name = "label2";
-            label2.Size = new Size(85, 20);
+            label2.Size = new Size(77, 20);
             label2.TabIndex = 2;
             label2.Text = "Kategorie:";
             label2.TextAlign = ContentAlignment.MiddleLeft;
@@ -84,7 +86,7 @@
             // 
             cmbKategorie.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbKategorie.FormattingEnabled = true;
-            cmbKategorie.Location = new Point(131, 199);
+            cmbKategorie.Location = new Point(107, 161);
             cmbKategorie.Margin = new Padding(3, 4, 3, 4);
             cmbKategorie.Name = "cmbKategorie";
             cmbKategorie.Size = new Size(228, 28);
@@ -94,9 +96,10 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(38, 81);
+            label3.Font = new Font("Segoe UI", 9F);
+            label3.Location = new Point(18, 60);
             label3.Name = "label3";
-            label3.Size = new Size(46, 20);
+            label3.Size = new Size(39, 20);
             label3.TabIndex = 4;
             label3.Text = "Typ: ";
             label3.TextAlign = ContentAlignment.MiddleLeft;
@@ -105,7 +108,7 @@
             // 
             cmbTyp.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbTyp.FormattingEnabled = true;
-            cmbTyp.Location = new Point(131, 80);
+            cmbTyp.Location = new Point(107, 59);
             cmbTyp.Margin = new Padding(3, 4, 3, 4);
             cmbTyp.Name = "cmbTyp";
             cmbTyp.Size = new Size(248, 28);
@@ -113,20 +116,19 @@
             // 
             // btnPridat
             // 
-            btnPridat.BackColor = Color.DarkGray;
-            btnPridat.FlatStyle = FlatStyle.Flat;
-            btnPridat.Location = new Point(195, 1);
-            btnPridat.Margin = new Padding(3, 4, 3, 4);
+            btnPridat.BackColor = SystemColors.Control;
+            btnPridat.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            btnPridat.Location = new Point(216, 9);
             btnPridat.Name = "btnPridat";
-            btnPridat.Size = new Size(113, 46);
+            btnPridat.Size = new Size(100, 39);
             btnPridat.TabIndex = 6;
             btnPridat.Text = "Uložit";
-            btnPridat.UseVisualStyleBackColor = false;
+            btnPridat.UseVisualStyleBackColor = true;
             btnPridat.Click += btnUlozit_Click;
             // 
             // txtVlastniUcel
             // 
-            txtVlastniUcel.Location = new Point(131, 245);
+            txtVlastniUcel.Location = new Point(107, 207);
             txtVlastniUcel.Margin = new Padding(3, 4, 3, 4);
             txtVlastniUcel.Name = "txtVlastniUcel";
             txtVlastniUcel.Size = new Size(212, 27);
@@ -135,7 +137,7 @@
             // 
             // dtpDatum
             // 
-            dtpDatum.Location = new Point(131, 27);
+            dtpDatum.Location = new Point(107, 15);
             dtpDatum.Margin = new Padding(3, 4, 3, 4);
             dtpDatum.Name = "dtpDatum";
             dtpDatum.Size = new Size(248, 27);
@@ -144,9 +146,10 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(34, 30);
+            label4.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            label4.Location = new Point(14, 18);
             label4.Name = "label4";
-            label4.Size = new Size(64, 20);
+            label4.Size = new Size(57, 20);
             label4.TabIndex = 10;
             label4.Text = "Datum:";
             label4.TextAlign = ContentAlignment.MiddleLeft;
@@ -154,16 +157,17 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(35, 296);
+            label5.Font = new Font("Segoe UI", 9F);
+            label5.Location = new Point(15, 253);
             label5.Name = "label5";
-            label5.Size = new Size(97, 20);
+            label5.Size = new Size(83, 20);
             label5.TabIndex = 11;
             label5.Text = "Poznámka: ";
             label5.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // txtPoznamka
             // 
-            txtPoznamka.Location = new Point(131, 295);
+            txtPoznamka.Location = new Point(107, 252);
             txtPoznamka.Margin = new Padding(3, 4, 3, 4);
             txtPoznamka.Multiline = true;
             txtPoznamka.Name = "txtPoznamka";
@@ -172,15 +176,14 @@
             // 
             // btnZrusit
             // 
-            btnZrusit.BackColor = Color.DarkGray;
-            btnZrusit.FlatStyle = FlatStyle.Flat;
-            btnZrusit.Location = new Point(330, 1);
-            btnZrusit.Margin = new Padding(3, 4, 3, 4);
+            btnZrusit.BackColor = SystemColors.Control;
+            btnZrusit.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            btnZrusit.Location = new Point(324, 9);
             btnZrusit.Name = "btnZrusit";
-            btnZrusit.Size = new Size(116, 46);
+            btnZrusit.Size = new Size(100, 39);
             btnZrusit.TabIndex = 13;
             btnZrusit.Text = "Zrušit";
-            btnZrusit.UseVisualStyleBackColor = false;
+            btnZrusit.UseVisualStyleBackColor = true;
             btnZrusit.Click += btnZrusit_Click;
             // 
             // panel1
@@ -190,7 +193,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(467, 50);
+            panel1.Size = new Size(442, 50);
             panel1.TabIndex = 14;
             // 
             // label6
@@ -206,17 +209,19 @@
             // 
             // panel2
             // 
+            panel2.BackColor = SystemColors.Control;
             panel2.Controls.Add(btnPridat);
             panel2.Controls.Add(btnZrusit);
             panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(0, 488);
+            panel2.Location = new Point(0, 415);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(10);
-            panel2.Size = new Size(467, 60);
+            panel2.Size = new Size(442, 60);
             panel2.TabIndex = 15;
             // 
             // panel3
             // 
+            panel3.BackColor = SystemColors.Control;
             panel3.Controls.Add(label7);
             panel3.Controls.Add(cmbKategorie);
             panel3.Controls.Add(txtCastka);
@@ -233,14 +238,14 @@
             panel3.Location = new Point(0, 50);
             panel3.Name = "panel3";
             panel3.Padding = new Padding(20);
-            panel3.Size = new Size(467, 438);
+            panel3.Size = new Size(442, 365);
             panel3.TabIndex = 16;
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Microsoft Sans Serif", 16F);
-            label7.Location = new Point(385, 146);
+            label7.Location = new Point(361, 113);
             label7.Name = "label7";
             label7.Size = new Size(46, 31);
             label7.TabIndex = 13;
@@ -251,7 +256,7 @@
             AutoScaleDimensions = new SizeF(10F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LightGray;
-            ClientSize = new Size(467, 548);
+            ClientSize = new Size(442, 475);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);

@@ -280,7 +280,7 @@
             // btnZrusit
             // 
             btnZrusit.DialogResult = DialogResult.Cancel;
-            btnZrusit.Location = new Point(202, 386);
+            btnZrusit.Location = new Point(316, 386);
             btnZrusit.Name = "btnZrusit";
             btnZrusit.Size = new Size(102, 39);
             btnZrusit.TabIndex = 19;
@@ -289,7 +289,7 @@
             // 
             // btnOk
             // 
-            btnOk.Location = new Point(310, 386);
+            btnOk.Location = new Point(210, 386);
             btnOk.Name = "btnOk";
             btnOk.Size = new Size(100, 39);
             btnOk.TabIndex = 20;
